@@ -22,6 +22,7 @@ public class RPSLS extends Frame {
    private Checkbox scissors = new Checkbox("Scissors", choice, true);
    private Checkbox lizard = new Checkbox("Lizard", choice, true);
    private Checkbox spock = new Checkbox("Spock", choice, true);
+   private static Dialog winner;
    private int playerScore = 0;
    private int compScore = 0;
    private Random rand = new Random();
@@ -161,12 +162,50 @@ public class RPSLS extends Frame {
          }
 
          if (playerScore == 5 || compScore == 5) {
-            Dialog winner = new Dialog(super);
+            String win;
 
+            if (playerScore == 5) {
+               win = "You won.";
+            } else {
+               win = "Computer won.";
+            }
 
+            Frame extra = new Frame();
+            winner = new Dialog(extra, "Game Over!");
+            winner.setLayout(new FlowLayout());
+            winner.setSize(20, 30);
+            winner.add(new Label(win, Label.CENTER));
+
+            Button btnReplay = new Button("OK");
+            btnReplay.addActionListener (new MyActionListener() {
+               public void actionPerformed( ActionEvent e ) {
+                  winner.setVisible(false);
+                  setVisible(false);
+                  new RPSLS();
+               }
+            });
+
+            winner.add("South", btnReplay);
+            winner.addWindowListener(new WindowAdapter() {
+               public void windowClosing(WindowEvent windowEvent){
+                  RPSLS.winner.setVisible(false);
+               }
+            });
+
+            winner.pack();
+            winner.setVisible(true);
          }
       }
    }
+
+   /*class Winner extends Dialog {
+      public Winner(Frame parent) {
+         super(parent, true);
+         setLayout(new BorderLayout());
+         add(new Label("Game Over!", Label.CENTER));
+         add(new Button("OK"));
+      }
+   }*/
 
    public int randInt(int min, int max) {
       return rand.nextInt((max - min) + 1) + min;
