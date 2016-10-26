@@ -198,15 +198,6 @@ public class RPSLS extends Frame {
       }
    }
 
-   /*class Winner extends Dialog {
-      public Winner(Frame parent) {
-         super(parent, true);
-         setLayout(new BorderLayout());
-         add(new Label("Game Over!", Label.CENTER));
-         add(new Button("OK"));
-      }
-   }*/
-
    public int randInt(int min, int max) {
       return rand.nextInt((max - min) + 1) + min;
    }
